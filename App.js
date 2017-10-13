@@ -74,21 +74,25 @@ class UnderlineTabBarExample extends Component {
     scale: this._scrollX.interpolate({
       inputRange: [i - 1, i, i + 1],
       outputRange: [1, 1.2, 1],
+      extrapolate: 'clamp',
     }),
     opacity: this._scrollX.interpolate({
       inputRange: [i - 1, i, i + 1],
       outputRange: [0.9, 1, 0.9],
+      extrapolate: 'clamp',
     }),
     textColor: this._scrollX.interpolate({
       inputRange: [i - 1, i, i + 1],
       outputRange: ['#000', '#fff', '#000'],
     }),
     backgroundColor: this._scrollX.interpolate({
-      inputRange: [i - 2, i - 1, i, i + 1, i + 2],
-      outputRange: ['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.1)', '#000', 'rgba(0,0,0,0.1)', 'rgba(0,0,0,0.1)'],
+      inputRange: [i - 1, i, i + 1],
+      outputRange: ['rgba(0,0,0,0.1)', '#000', 'rgba(0,0,0,0.1)'],
+      extrapolate: 'clamp',
     }),
   }));
   render() {
+    console.log(this.interpolators);
     return (
       <View style={[styles.container, {paddingTop: 20}]}>
         <ScrollableTabView
