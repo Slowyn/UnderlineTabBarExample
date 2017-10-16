@@ -70,7 +70,7 @@ const Tab = (tab, page, isTabActive, onPressHandler, onTabLayout, styles) => {
 class UnderlineTabBarExample extends Component {
   _scrollX = new Animated.Value(0);
   // 6 is a quantity of tabs
-  interpolators = new Array(6).fill(0).map((_, i) => i).map((i) => ({
+  interpolators = [...Array(6).keys()].map((i) => ({
     scale: this._scrollX.interpolate({
       inputRange: [i - 1, i, i + 1],
       outputRange: [1, 1.2, 1],
@@ -92,9 +92,8 @@ class UnderlineTabBarExample extends Component {
     }),
   }));
   render() {
-    console.log(this.interpolators);
     return (
-      <View style={[styles.container, {paddingTop: 20}]}>
+      <View style={[styles.container, { paddingTop: 20 }]}>
         <ScrollableTabView
           tabBarUnderlineColor="#53ac49"
           tabBarActiveTextColor="#53ac49"
@@ -123,9 +122,9 @@ class UnderlineTabBarExample extends Component {
           onScroll={(x) => this._scrollX.setValue(x)}
         >
           <Page tabLabel={{label: "Hot"}} label="Page #1 Hot" text="You can pass your own views to TabBar!"/>
-          <Page tabLabel={{label: "Trending", badge: 3}} label="Page #2 Trending" text="Yehoo!!!"/>
-          <Page tabLabel={{label: "Fresh", badge: 30, badgeColor: 'red'}} label="Page #3 Fresh" text="Hooray!"/>
-          <Page tabLabel={{label: "Funny", badge: 8, badgeColor: 'violet'}} label="Page #4 Funny"/>
+          <Page tabLabel={{label: "Trending"}} label="Page #2 Trending" text="Yehoo!!!"/>
+          <Page tabLabel={{label: "Fresh"}} label="Page #3 Fresh" text="Hooray!"/>
+          <Page tabLabel={{label: "Funny"}} label="Page #4 Funny"/>
           <Page tabLabel={{label: "Movie & TV"}} label="Page #5 Movie & TV"/>
           <Page tabLabel={{label: "Sport"}} label="Page #6 Sport"/>
         </ScrollableTabView>
