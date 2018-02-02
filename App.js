@@ -49,7 +49,7 @@ const iconsSet = {
   sport: require('./images/ic_rowing.png'),
 };
 
-const Tab = (tab, page, isTabActive, onPressHandler, onTabLayout, styles) => {
+const Tab = ({ tab, page, isTabActive, onPressHandler, onTabLayout, styles }) => {
   const { label, icon } = tab;
   const style = {
     marginHorizontal: 20,
@@ -89,7 +89,7 @@ const Tab = (tab, page, isTabActive, onPressHandler, onTabLayout, styles) => {
 class UnderlineTabBarExample extends Component {
   _scrollX = new Animated.Value(0);
   // 6 is a quantity of tabs
-  interpolators = [...Array(6).keys()].map(idx => ({
+  interpolators = Array.from({ length: 6 }, (_, i) => i).map(idx => ({
     scale: this._scrollX.interpolate({
       inputRange: [idx - 1, idx, idx + 1],
       outputRange: [1, 1.2, 1],
@@ -133,9 +133,17 @@ class UnderlineTabBarExample extends Component {
             <TabBar
               underlineColor="#000"
               tabBarStyle={{ backgroundColor: "#fff", borderTopColor: '#d2d2d2', borderTopWidth: 1 }}
-              renderTab={(...props) => {
-                return Tab(...props, this.interpolators[props[1]]);
-              }}
+              renderTab={(tab, page, isTabActive, onPressHandler, onTabLayout) => (
+                <Tab
+                  key={page}
+                  tab={tab}
+                  page={page}
+                  isTabActive={isTabActive}
+                  onPressHandler={onPressHandler}
+                  onTabLayout={onTabLayout}
+                  styles={this.interpolators[page]}
+                />
+              )}
             />
           )}
           onScroll={(x) => this._scrollX.setValue(x)}
@@ -151,7 +159,7 @@ class UnderlineTabBarExample extends Component {
         <ScrollableTabView
           tabBarUnderlineColor="#53ac49"
           tabBarActiveTextColor="#53ac49"
-          renderTabBar={() => <TabBar/>}
+          renderTabBar={() => <TabBar />}
         >
           <Page tabLabel={{label: "Page #1"}} label="Page #1"/>
           <Page tabLabel={{label: "Page #2", badge: 3}} label="Page #2 aka Long!"/>
